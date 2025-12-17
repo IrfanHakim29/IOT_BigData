@@ -100,9 +100,10 @@ with st.sidebar:
     if st.button("🎯 Value & Insight", use_container_width=True):
         st.session_state.page = "value"
     if st.button("👥 About Us", use_container_width=True):
-        st.session_state.page = "about",
-if st.button("📄 Raw Data Table", use_container_width=True):
-    st.session_state.page = "rawdata"
+        st.session_state.page = "about"
+    if st.button("📄 Data Table", use_container_width=True):
+        st.session_state.page = "rawdata"
+
 
         
 
@@ -270,7 +271,7 @@ elif st.session_state.page == "analysis":
     c1, c2, c3 = st.columns(3)
     c1.metric("🌡 Realtime Temperature", f"{rt_temp:.2f} °C")
     c2.metric("💧 Realtime Humidity", f"{rt_hum:.2f} %")
-    c3.metric("🏷️ Kondisi (ETL Terdekat)", condition)
+    c3.metric("🏷️ Kondisi", condition)
 
     st.markdown(f"""
     <div class="card">
@@ -375,20 +376,21 @@ elif st.session_state.page == "about":
 # PAGE: RAW DATA TABLE
 # =====================================================
 elif st.session_state.page == "rawdata":
-    st.markdown("<div class='hero'><h2>📄 Raw Sensor Data (MongoDB)</h2></div>", unsafe_allow_html=True)
+    st.markdown("<div class='hero'><h2>📄 Sensor Data (MongoDB)</h2></div>", unsafe_allow_html=True)
 
     df = get_raw_data()
-
+    
     if df.empty:
-        st.warning("Tidak ada data raw untuk ditampilkan.")
+        st.warning("Tidak ada data  untuk ditampilkan.")
         st.stop()
+        
 
     st.markdown("""
     <div class="card">
-        <p>Berikut adalah data mentah (RAW) yang langsung dikirim dari sensor IoT
-        sebelum melalui proses ETL.</p>
+        <p>Berikut adalah data  yang langsung dikirim dari sensor IoT.</p>
     </div>
     """, unsafe_allow_html=True)
+    
 
     st.dataframe(df, use_container_width=True, height=500)
 
