@@ -135,34 +135,35 @@ def get_realtime(limit=40):
     df["created_at"] = pd.to_datetime(df["created_at"])
     return df.sort_values("created_at")
 
-def get_closest_clean(rt_temp, rt_hum, limit=30):
-    data = list(
-        clean_col.find()
-        .sort("window_end", -1)
-        .limit(limit)
-    )
+def get_rule_based_clean(rt_temp, rt_hum, temp_tolerance=0.5):
+    """
+    Ambil rule ETL berdasarkan RANGE suhu realtime,
+    lalu pilih rule terbaik berdasarkan humidity.
+    """
 
+    data = list(clean_col.find())
     if not data:
         return None
 
     df = pd.DataFrame(data)
 
-    # Hitung jarak gabungan (temperature + humidity)
-    df["temp_diff"] = (df["avg_temperature"] - rt_temp).abs()
-    df["hum_diff"] = (df["avg_humidity"] - rt_hum).abs()
-
-    # Bobot (humidity lebih berpengaruh)
-    df["score"] = (df["temp_diff"] * 0.4) + (df["hum_diff"] * 0.6)
-
-    # Jika realtime humidity > 75 → jangan izinkan "Nyaman"
-    if rt_hum > 75:
-        df = df[df["condition"] != "Nyaman"]
+    # 1. FILTER RULE BERDASARKAN RANGE SUHU
+    df = df[
+        (df["avg_temperature"] >= rt_temp - temp_tolerance) &
+        (df["avg_temperature"] <= rt_temp + temp_tolerance)
+    ]
 
     if df.empty:
         return None
 
-    closest = df.sort_values("score").iloc[0]
-    return closest.to_dict()
+    # 2. HUMIDITY SEBAGAI VALIDATOR
+    df["hum_diff"] = (df["avg_humidity"] - rt_hum).abs()
+
+    # 3. AMBIL RULE PALING MASUK AKAL
+    selected = df.sort_values("hum_diff").iloc[0]
+
+    return selected.to_dict()
+
 
 # =====================================================
 # PAGE: OVERVIEW
@@ -235,7 +236,7 @@ elif st.session_state.page == "analysis":
     rt_hum = realtime["humidity"]
 
     # AMBIL ETL PALING DEKAT DENGAN REALTIME
-    clean = get_closest_clean(rt_temp, rt_hum)
+    clean = get_rule_based_clean(rt_temp, rt_hum)
     if not clean:
         st.warning("Data ETL belum tersedia.")
         st.stop()
