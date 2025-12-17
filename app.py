@@ -135,6 +135,22 @@ def get_realtime(limit=40):
     df["created_at"] = pd.to_datetime(df["created_at"])
     return df.sort_values("created_at")
 
+def get_closest_clean(rt_temp, limit=20):
+    data = list(
+        clean_col.find()
+        .sort("window_end", -1)
+        .limit(limit)
+    )
+
+    if not data:
+        return None
+
+    df = pd.DataFrame(data)
+    df["diff"] = (df["avg_temperature"] - rt_temp).abs()
+
+    closest = df.sort_values("diff").iloc[0]
+    return closest.to_dict()
+
 # =====================================================
 # PAGE: OVERVIEW
 # =====================================================
@@ -197,17 +213,21 @@ elif st.session_state.page == "analysis":
     st.markdown("<div class='hero'><h2>🧠 Analisis Kondisi Ruangan</h2></div>", unsafe_allow_html=True)
 
     realtime = get_latest()
-    clean = get_latest_clean()
-
-    if not realtime or not clean:
-        st.warning("Data belum lengkap.")
+    if not realtime:
+        st.warning("Data realtime belum tersedia.")
         st.stop()
 
     # REALTIME (MONITORING)
     rt_temp = realtime["temperature"]
     rt_hum = realtime["humidity"]
 
-    # CLEAN (HASIL ETL)
+    # AMBIL ETL PALING DEKAT DENGAN REALTIME
+    clean = get_closest_clean(rt_temp)
+    if not clean:
+        st.warning("Data ETL belum tersedia.")
+        st.stop()
+
+    # DATA DARI ETL (ROLE / RULE BASE)
     avg_temp = clean["avg_temperature"]
     avg_hum = clean["avg_humidity"]
     condition = clean["condition"]
@@ -225,22 +245,23 @@ elif st.session_state.page == "analysis":
     c1, c2, c3 = st.columns(3)
     c1.metric("🌡 Realtime Temperature", f"{rt_temp:.2f} °C")
     c2.metric("💧 Realtime Humidity", f"{rt_hum:.2f} %")
-    c3.metric("🏷️ Kondisi (ETL)", condition)
+    c3.metric("🏷️ Kondisi (ETL Terdekat)", condition)
 
     st.markdown(f"""
     <div class="card">
-        <h3 class="{color}">Kondisi Berdasarkan Data Historis (ETL)</h3>
-        <p><b>Avg Temperature:</b> {avg_temp:.2f} °C</p>
-        <p><b>Avg Humidity:</b> {avg_hum:.2f} %</p>
+        <h3 class="{color}">Kondisi Berdasarkan ETL Terdekat</h3>
+        <p><b>Avg Temperature (ETL):</b> {avg_temp:.2f} °C</p>
+        <p><b>Avg Humidity (ETL):</b> {avg_hum:.2f} %</p>
         <p><b>Risiko:</b> {risk}</p>
         <p><b>Rekomendasi:</b> {rec}</p>
         <hr>
         <small>
-        Kondisi ruangan ditentukan berdasarkan data historis hasil ETL (clean data),
-        sedangkan data realtime digunakan untuk monitoring kondisi saat ini.
+        Kondisi ruangan ditentukan dengan mencari data historis hasil ETL
+        yang paling mendekati nilai suhu realtime saat ini.
         </small>
     </div>
     """, unsafe_allow_html=True)
+
 
 
 
