@@ -135,14 +135,6 @@ def get_realtime(limit=40):
     df["created_at"] = pd.to_datetime(df["created_at"])
     return df.sort_values("created_at")
 
-def analyze(temp, hum):
-    if 22 <= temp <= 26 and 40 <= hum <= 70:
-        return "Nyaman", "Rendah", "Tidak perlu tindakan", "green"
-    elif temp > 26:
-        return "Gerah", "Sedang", "Pertimbangkan pendinginan ruangan", "yellow"
-    else:
-        return "Tidak Stabil", "Sedang", "Pantau kondisi", "yellow"
-
 # =====================================================
 # PAGE: OVERVIEW
 # =====================================================
@@ -211,37 +203,45 @@ elif st.session_state.page == "analysis":
         st.warning("Data belum lengkap.")
         st.stop()
 
-    # REALTIME
+    # REALTIME (MONITORING)
     rt_temp = realtime["temperature"]
     rt_hum = realtime["humidity"]
 
-    # CLEAN (ETL)
+    # CLEAN (HASIL ETL)
     avg_temp = clean["avg_temperature"]
     avg_hum = clean["avg_humidity"]
     condition = clean["condition"]
     risk = clean["risk_level"]
     rec = clean["recommendation"]
 
+    # WARNA SESUAI KONDISI ETL
+    if condition == "Nyaman":
+        color = "green"
+    elif condition == "Gerah":
+        color = "yellow"
+    else:
+        color = "red"
+
     c1, c2, c3 = st.columns(3)
-    c1.metric("🌡 Realtime Temp", f"{rt_temp:.2f} °C")
+    c1.metric("🌡 Realtime Temperature", f"{rt_temp:.2f} °C")
     c2.metric("💧 Realtime Humidity", f"{rt_hum:.2f} %")
     c3.metric("🏷️ Kondisi (ETL)", condition)
 
     st.markdown(f"""
     <div class="card">
-        <h3>Kondisi Berdasarkan Data Historis (ETL)</h3>
+        <h3 class="{color}">Kondisi Berdasarkan Data Historis (ETL)</h3>
         <p><b>Avg Temperature:</b> {avg_temp:.2f} °C</p>
         <p><b>Avg Humidity:</b> {avg_hum:.2f} %</p>
         <p><b>Risiko:</b> {risk}</p>
         <p><b>Rekomendasi:</b> {rec}</p>
         <hr>
         <small>
-        Analisis ini menggunakan data hasil ETL (clean data) sebagai dasar
-        pengambilan keputusan, sementara nilai realtime digunakan
-        untuk monitoring kondisi saat ini.
+        Kondisi ruangan ditentukan berdasarkan data historis hasil ETL (clean data),
+        sedangkan data realtime digunakan untuk monitoring kondisi saat ini.
         </small>
     </div>
     """, unsafe_allow_html=True)
+
 
 
 # =====================================================
