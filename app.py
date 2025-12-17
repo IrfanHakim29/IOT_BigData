@@ -263,7 +263,7 @@ elif st.session_state.page == "about":
     st.markdown("<div class='hero'><h2>👥 About Us</h2></div>", unsafe_allow_html=True)
     st.markdown("""
     <div class="card">
-    <b>Nama:</b> (isi nama kamu)<br>
+    <b>Nama:</b> Muhammad Irfan Hakim<br>
     <b>Mata Kuliah:</b> Big Data<br>
     <b>Proyek:</b> IoT Environmental Monitoring
     </div>
