@@ -113,7 +113,7 @@ clean_col = db["dht22_clean"]
 
 
 
-st_autorefresh(interval=1000, key="refresh")
+st_autorefresh(interval=3000, key="refresh")
 
 # =====================================================
 # HELPERS
