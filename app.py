@@ -68,7 +68,7 @@ body {
 # SESSION STATE (NAVIGATION)
 # =====================================================
 if "page" not in st.session_state:
-    st.session_state.page = "dashboard"
+    st.session_state.page = "overview"
 
 def nav_button(label, page):
     active = st.session_state.page == page
