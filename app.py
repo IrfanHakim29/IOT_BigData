@@ -283,22 +283,30 @@ elif st.session_state.page == "value":
     st.markdown("""
     <div class="card">
     <p>
-    Penerapan Big Data Pipeline pada proyek ini memberikan nilai tambah dalam
-    pengelolaan data sensor suhu berbasis IoT. Data yang sebelumnya masih
-    berupa data mentah dapat diolah menjadi data yang lebih terstruktur dan
-    mudah dianalisis.
+    Implementasi Big Data Pipeline pada proyek ini memberikan nilai utama dalam
+    pengelolaan data sensor suhu berbasis Internet of Things (IoT) yang bersifat
+    <i>time-series</i> dan dihasilkan secara kontinu.
     </p>
 
+    <h4>Nilai (Value) yang Dihasilkan</h4>
     <ul>
-        <li>Data suhu menjadi lebih rapi dan konsisten setelah melalui proses ETL.</li>
-        <li>Visualisasi data membantu memahami pola perubahan suhu dari waktu ke waktu.</li>
-        <li>Perbandingan suhu dapat dilakukan berdasarkan waktu dan lokasi.</li>
-        <li>Pipeline Big Data mempermudah proses analisis data berskala besar.</li>
+        <li>Data mentah sensor suhu (RAW) berhasil diolah menjadi data bersih (CLEAN) melalui proses ETL.</li>
+        <li>Kualitas data meningkat karena data null dan anomali telah difilter.</li>
+        <li>Data historis memungkinkan analisis tren suhu dari waktu ke waktu.</li>
+        <li>Dashboard menyediakan monitoring realtime dan analisis berbasis data historis.</li>
+    </ul>
+
+    <h4>Insight yang Diperoleh</h4>
+    <ul>
+        <li>Suhu ruangan menunjukkan pola fluktuasi yang konsisten berdasarkan waktu.</li>
+        <li>Rata-rata suhu dan kelembapan dari hasil ETL dapat digunakan sebagai dasar evaluasi kondisi lingkungan.</li>
+        <li>Hasil analisis mendukung pengambilan keputusan sederhana seperti kebutuhan pendinginan ruangan.</li>
     </ul>
 
     <p>
-    Nilai utama dari proyek ini terletak pada pemahaman penerapan konsep Big Data
-    Pipeline dalam sistem berbasis IoT.
+    Dengan pendekatan Big Data Pipeline, data sensor IoT tidak hanya ditampilkan
+    secara realtime, tetapi juga diubah menjadi informasi yang memiliki makna
+    dan dapat digunakan sebagai dasar pengambilan keputusan.
     </p>
     </div>
     """, unsafe_allow_html=True)
