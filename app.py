@@ -149,13 +149,28 @@ def analyze(temp, hum):
 if st.session_state.page == "overview":
     st.markdown("""
     <div class="hero">
-        <h1>IoT Big Data Environmental Monitoring</h1>
+        <h1>Implementasi Big Data Pipeline untuk Analisis dan Visualisasi Data Sensor Suhu Berbasis Internet of Things (IoT)</h1>
         <p>
-        Platform monitoring dan analisis lingkungan berbasis IoT dan Big Data.
-        Data realtime diproses melalui pipeline ETL untuk menghasilkan insight dan rekomendasi.
+        Proyek ini bertujuan untuk mengimplementasikan konsep Big Data Pipeline
+        dalam pengolahan data sensor suhu berbasis Internet of Things (IoT).
+        Data suhu diperoleh dari perangkat sensor IoT yang melakukan pencatatan
+        suhu lingkungan secara berkala dan berkelanjutan.
+        </p>
+        <p>
+        Data yang dihasilkan oleh sensor IoT bersifat time series dan terus
+        bertambah seiring waktu. Oleh karena itu, diperlukan pendekatan Big Data
+        untuk mengelola data tersebut secara sistematis, mulai dari proses
+        pengumpulan data (ingestion), pembersihan dan transformasi data (ETL),
+        penyimpanan data, hingga penyajian hasil dalam bentuk visualisasi.
+        </p>
+        <p>
+        Website ini dikembangkan sebagai media visualisasi dan presentasi
+        untuk menampilkan hasil implementasi Big Data Pipeline yang telah
+        dirancang pada proyek ini.
         </p>
     </div>
     """, unsafe_allow_html=True)
+
 
 # =====================================================
 # PAGE: REALTIME
@@ -236,9 +251,29 @@ elif st.session_state.page == "pipeline":
     st.markdown("<div class='hero'><h2>🔄 Big Data Pipeline</h2></div>", unsafe_allow_html=True)
     st.markdown("""
     <div class="card">
-    Sensor → MongoDB (RAW) → PySpark ETL → MongoDB (CLEAN) → Dashboard → Insight
+    <p>
+    Big Data Pipeline pada proyek ini dirancang untuk mengelola data sensor suhu
+    yang dihasilkan oleh perangkat IoT secara berkelanjutan. Pipeline ini
+    memastikan data dapat diproses secara terstruktur dari tahap awal hingga
+    tahap visualisasi.
+    </p>
+
+    <p><b>Alur Big Data Pipeline:</b></p>
+    <ul>
+        <li>Data suhu dikumpulkan dari sensor IoT sebagai data mentah (RAW).</li>
+        <li>Data mentah disimpan ke dalam database MongoDB.</li>
+        <li>Data kemudian diproses menggunakan PySpark melalui proses ETL.</li>
+        <li>Hasil data bersih (CLEAN) disimpan kembali ke database.</li>
+        <li>Data yang telah diolah divisualisasikan melalui dashboard.</li>
+    </ul>
+
+    <p>
+    Pipeline ini mengacu pada konsep Big Data yang mencakup tahapan ingestion,
+    pre-processing, storage, dan visualization.
+    </p>
     </div>
     """, unsafe_allow_html=True)
+
 
 # =====================================================
 # PAGE: VALUE
@@ -247,14 +282,27 @@ elif st.session_state.page == "value":
     st.markdown("<div class='hero'><h2>🎯 Value & Insight</h2></div>", unsafe_allow_html=True)
     st.markdown("""
     <div class="card">
+    <p>
+    Penerapan Big Data Pipeline pada proyek ini memberikan nilai tambah dalam
+    pengelolaan data sensor suhu berbasis IoT. Data yang sebelumnya masih
+    berupa data mentah dapat diolah menjadi data yang lebih terstruktur dan
+    mudah dianalisis.
+    </p>
+
     <ul>
-        <li>Monitoring realtime</li>
-        <li>Analisis kondisi otomatis</li>
-        <li>Decision support system</li>
-        <li>Implementasi konsep Big Data 5V</li>
+        <li>Data suhu menjadi lebih rapi dan konsisten setelah melalui proses ETL.</li>
+        <li>Visualisasi data membantu memahami pola perubahan suhu dari waktu ke waktu.</li>
+        <li>Perbandingan suhu dapat dilakukan berdasarkan waktu dan lokasi.</li>
+        <li>Pipeline Big Data mempermudah proses analisis data berskala besar.</li>
     </ul>
+
+    <p>
+    Nilai utama dari proyek ini terletak pada pemahaman penerapan konsep Big Data
+    Pipeline dalam sistem berbasis IoT.
+    </p>
     </div>
     """, unsafe_allow_html=True)
+
 
 # =====================================================
 # PAGE: ABOUT
