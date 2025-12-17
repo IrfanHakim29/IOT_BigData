@@ -100,7 +100,11 @@ with st.sidebar:
     if st.button("🎯 Value & Insight", use_container_width=True):
         st.session_state.page = "value"
     if st.button("👥 About Us", use_container_width=True):
-        st.session_state.page = "about"
+        st.session_state.page = "about",
+if st.button("📄 Raw Data Table", use_container_width=True):
+    st.session_state.page = "rawdata"
+
+        
 
 # =====================================================
 # DATABASE
@@ -164,6 +168,13 @@ def get_rule_based_clean(rt_temp, rt_hum, temp_tolerance=0.5):
 
     return selected.to_dict()
 
+def get_raw_data(limit=500):
+    d = list(raw_col.find().sort("created_at", -1).limit(limit))
+    if not d:
+        return pd.DataFrame()
+    df = pd.DataFrame(d)
+    df["created_at"] = pd.to_datetime(df["created_at"])
+    return df
 
 # =====================================================
 # PAGE: OVERVIEW
@@ -359,3 +370,25 @@ elif st.session_state.page == "about":
     <b>Proyek:</b> IoT Environmental Monitoring
     </div>
     """, unsafe_allow_html=True)
+
+# =====================================================
+# PAGE: RAW DATA TABLE
+# =====================================================
+elif st.session_state.page == "rawdata":
+    st.markdown("<div class='hero'><h2>📄 Raw Sensor Data (MongoDB)</h2></div>", unsafe_allow_html=True)
+
+    df = get_raw_data()
+
+    if df.empty:
+        st.warning("Tidak ada data raw untuk ditampilkan.")
+        st.stop()
+
+    st.markdown("""
+    <div class="card">
+        <p>Berikut adalah data mentah (RAW) yang langsung dikirim dari sensor IoT
+        sebelum melalui proses ETL.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.dataframe(df, use_container_width=True, height=500)
+
