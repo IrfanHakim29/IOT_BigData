@@ -114,7 +114,7 @@ with st.sidebar:
     if st.button("👥 About Us", use_container_width=True):
         st.session_state.page = "about"
     if st.button("📄 Data Table", use_container_width=True):
-        st.session_state.page = "rawdata",
+        st.session_state.page = "rawdata"
     if st.button("📊 Visualisasi ETL", use_container_width=True):
      st.session_state.page = "viz"
 
