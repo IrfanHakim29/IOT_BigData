@@ -351,7 +351,7 @@ if st.session_state.page == "about":
 
     # --- TAB 2: TOPIK PROYEK ---
     with tab_topic:
-        st.markdown("## 📊 Implementasi Big Data Pipeline")
+        st.markdown("## 📊 Implementasi Big Data Pipeline untuk Analisis dan Visualisasi Data Sensor Suhu Berbasis Internet of Things (IoT)")
         st.markdown("""
 Mengimplementasikan solusi **Big Data end-to-end** yang menggabungkan perangkat IoT fisik dengan pemrosesan data modern.
 Sistem ini mengubah data sensor suhu mentah menjadi informasi yang bermakna melalui pipeline ETL terpadu dan visualisasi real-time.
