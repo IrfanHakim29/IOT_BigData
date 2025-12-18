@@ -350,8 +350,8 @@ if st.session_state.page == "about":
             </div>""", unsafe_allow_html=True)
 
     # --- TAB 2: TOPIK PROYEK ---
-  with tab_topic:
-    st.markdown("## 📊 Implementasi Big Data Pipeline untuk Analisis dan Visualisasi Data Sensor Suhu Berbasis Internet of Things (IoT)")
+    with tab_topic:
+     st.markdown("## 📊 Implementasi Big Data Pipeline untuk Analisis dan Visualisasi Data Sensor Suhu Berbasis Internet of Things (IoT)")
 
     st.markdown("""
     Perkembangan teknologi **Internet of Things (IoT)** memungkinkan perangkat fisik untuk 
@@ -401,8 +401,8 @@ if st.session_state.page == "about":
 - **Output:** Dashboard interaktif dengan visualisasi real-time dan analisis historis
         """)
         
-        st.subheader("💡 Inovasi Proyek")
-        st.write("""
+    st.subheader("💡 Inovasi Proyek")
+    st.write("""
 Integrasi sempurna antara hardware IoT dengan cloud database dan dashboard analytics,
 memberikan monitoring real-time dan insights berbasis data historis secara bersamaan.
         """)
