@@ -350,23 +350,51 @@ if st.session_state.page == "about":
             </div>""", unsafe_allow_html=True)
 
     # --- TAB 2: TOPIK PROYEK ---
-    with tab_topic:
-        st.markdown("## 📊 Implementasi Big Data Pipeline untuk Analisis dan Visualisasi Data Sensor Suhu Berbasis Internet of Things (IoT)")
-        st.markdown("""
-Mengimplementasikan solusi **Big Data end-to-end** yang menggabungkan perangkat IoT fisik dengan pemrosesan data modern.
-Sistem ini mengubah data sensor suhu mentah menjadi informasi yang bermakna melalui pipeline ETL terpadu dan visualisasi real-time.
-        """)
+  with tab_topic:
+    st.markdown("## 📊 Implementasi Big Data Pipeline untuk Analisis dan Visualisasi Data Sensor Suhu Berbasis Internet of Things (IoT)")
+
+    st.markdown("""
+    Perkembangan teknologi **Internet of Things (IoT)** memungkinkan perangkat fisik untuk 
+    mengumpulkan dan mengirimkan data secara otomatis dan berkelanjutan melalui jaringan internet. 
+    Data sensor suhu yang dihasilkan bersifat **real-time**, terus bertambah, dan memiliki karakteristik 
+    **Big Data**, sehingga memerlukan sistem pengolahan yang terstruktur dan efisien.
+
+    Proyek ini mengimplementasikan **Big Data Pipeline end-to-end** yang memproses data sensor suhu 
+    mulai dari tahap pengambilan data, pengolahan (ETL), penyimpanan, hingga visualisasi dalam bentuk 
+    dashboard interaktif. Sistem ini bertujuan mengubah data mentah dari sensor IoT menjadi informasi 
+    yang bermakna dan mudah dipahami.
+    """)
+
+    # =========================
+    # TUJUAN PROYEK
+    # =========================
+    st.subheader("🎯 Tujuan Proyek")
+    st.markdown("""
+    Tujuan dari proyek ini adalah untuk menerapkan konsep **Big Data Pipeline** dalam pengolahan 
+    data sensor suhu berbasis IoT. Secara khusus, tujuan proyek ini meliputi:
+    
+    - Merancang alur kerja Big Data Pipeline untuk data sensor suhu IoT  
+    - Mengimplementasikan proses **ETL (Extract, Transform, Load)** untuk membersihkan dan menyiapkan data  
+    - Menyediakan sistem penyimpanan data yang efisien berbasis cloud  
+    - Menampilkan visualisasi data suhu secara real-time dan historis  
+    - Menerapkan konsep Big Data dan IoT dalam sistem monitoring lingkungan
+    """)
+
+    # =========================
+    # MANFAAT PROYEK
+    # =========================
+    st.subheader("📈 Manfaat Proyek")
+    st.markdown("""
+    Adapun manfaat dari implementasi sistem ini antara lain:
+    
+    - Memberikan gambaran nyata penerapan Big Data pada sistem IoT  
+    - Membantu memahami tahapan pengumpulan, pengolahan, dan visualisasi data sensor  
+    - Menyajikan informasi perubahan suhu secara digital dan interaktif  
+    - Menjadi acuan pengembangan sistem monitoring lingkungan berbasis data  
+    """)
         
-        st.subheader("🎯 Tujuan Proyek")
-        st.write("""
-- Mengintegrasikan sensor IoT dengan infrastruktur cloud
-- Membangun pipeline ETL yang robust dan scalable
-- Menyediakan dashboard untuk monitoring dan analisis real-time
-- Menghasilkan insights dari data historis untuk pengambilan keputusan
-        """)
-        
-        st.subheader("📋 Ruang Lingkup")
-        st.markdown("""
+    st.subheader("📋 Ruang Lingkup")
+    st.markdown("""
 - **Input:** Data sensor suhu dan kelembapan dari perangkat IoT (ESP32 + DHT22)
 - **Storage:** MongoDB cloud untuk penyimpanan data terstruktur
 - **Processing:** ETL pipeline dengan Python dan Pandas untuk pembersihan dan agregasi data
