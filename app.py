@@ -5,9 +5,9 @@ import pandas as pd
 import plotly.graph_objects as go
 import time
 
-# =====================================================
+
 # PAGE CONFIG
-# =====================================================
+
 st.set_page_config(
     page_title="IoT Big Data Dashboard",
     page_icon="🌍",
@@ -15,11 +15,9 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# =====================================================
-# KONFIGURASI DATABASE & CACHING (PENTING!)
-# =====================================================
-# Ganti string ini dengan connection string Anda, tapi disarankan pakai st.secrets
-# Format: "mongodb+srv://username:password@cluster..."
+
+# KONFIGURASI DATABASE & CACHING 
+
 MONGO_URI = st.secrets["mongo"]["uri"]
 
 @st.cache_resource
@@ -36,7 +34,7 @@ def init_connection():
 
 client = init_connection()
 
-# Pastikan client berhasil terhubung sebelum lanjut
+
 if client:
     db = client["iot_db"]
     raw_col = db["dht22_logs"]
@@ -44,9 +42,7 @@ if client:
 else:
     st.stop()
 
-# =====================================================
-# GLOBAL STYLE (ENTERPRISE UI)
-# =====================================================
+
 st.markdown("""
 <style>
 
@@ -150,15 +146,15 @@ div[data-testid="stDataFrame"] {
 """, unsafe_allow_html=True)
 
 
-# =====================================================
+
 # SESSION STATE (NAVIGATION)
-# =====================================================
+
 if "page" not in st.session_state:
     st.session_state.page = "about"
 
-# =====================================================
+
 # SIDEBAR
-# =====================================================
+
 with st.sidebar:
     st.markdown("<div class='sidebar-title'>🌍 IoT Big Data</div>", unsafe_allow_html=True)
 
@@ -180,9 +176,9 @@ with st.sidebar:
         st_autorefresh(interval=3000, key="refresh") # 3 detik lebih stabil
         st.caption("🔄 Live updating...")
 
-# =====================================================
+
 # HELPERS (DATA FETCHING)
-# =====================================================
+
 
 def get_latest():
     """Mengambil 1 data paling baru dari RAW"""
@@ -307,14 +303,9 @@ def get_clean_data_near_realtime(rt_temp, tolerance=1.0, limit=200):
 
 
 
-# =====================================================
-# PAGE LOGIC
-# =====================================================
+
 
 # 1. ABOUT US
-# =====================================================
-# HALAMAN 5: ABOUT US (DIPERBARUI DENGAN TABS)
-# =====================================================
 if st.session_state.page == "about":
     st.markdown("<div class='hero'><h2>👥 About Us & Project</h2></div>", unsafe_allow_html=True)
     
@@ -348,64 +339,68 @@ if st.session_state.page == "about":
                 <hr style="border-color: #334155;">
                 <p><small>Tim ini berkomitmen pada pembelajaran praktis dan implementasi teknologi real-world dalam big data.</small></p>
             </div>""", unsafe_allow_html=True)
-
-    # --- TAB 2: TOPIK PROYEK ---
+# --- TAB 2: TOPIK PROYEK ---
     with tab_topic:
-     st.markdown("## 📊 Implementasi Big Data Pipeline untuk Analisis dan Visualisasi Data Sensor Suhu Berbasis Internet of Things (IoT)")
+        st.markdown("## 📊 Implementasi Big Data Pipeline untuk Analisis dan Visualisasi Data Sensor Suhu Berbasis Internet of Things (IoT)")
 
-    st.markdown("""
-    Perkembangan teknologi **Internet of Things (IoT)** memungkinkan perangkat fisik untuk 
-    mengumpulkan dan mengirimkan data secara otomatis dan berkelanjutan melalui jaringan internet. 
-    Data sensor suhu yang dihasilkan bersifat **real-time**, terus bertambah, dan memiliki karakteristik 
-    **Big Data**, sehingga memerlukan sistem pengolahan yang terstruktur dan efisien.
-
-    Proyek ini mengimplementasikan **Big Data Pipeline end-to-end** yang memproses data sensor suhu 
-    mulai dari tahap pengambilan data, pengolahan (ETL), penyimpanan, hingga visualisasi dalam bentuk 
-    dashboard interaktif. Sistem ini bertujuan mengubah data mentah dari sensor IoT menjadi informasi 
-    yang bermakna dan mudah dipahami.
-    """)
+        st.markdown("""
+        Perkembangan teknologi **Internet of Things (IoT)** memungkinkan perangkat fisik untuk 
+        mengumpulkan dan mengirimkan data secara otomatis dan berkelanjutan melalui jaringan internet. 
+        Data sensor suhu yang dihasilkan bersifat **real-time**, terus bertambah, dan memiliki karakteristik 
+        **Big Data**, sehingga memerlukan sistem pengolahan yang terstruktur dan efisien.
+        """)
 
     # =========================
     # TUJUAN PROYEK
     # =========================
-    st.subheader("🎯 Tujuan Proyek")
-    st.markdown("""
-    Tujuan dari proyek ini adalah untuk menerapkan konsep **Big Data Pipeline** dalam pengolahan 
-    data sensor suhu berbasis IoT. Secara khusus, tujuan proyek ini meliputi:
-    
-    - Merancang alur kerja Big Data Pipeline untuk data sensor suhu IoT  
-    - Mengimplementasikan proses **ETL (Extract, Transform, Load)** untuk membersihkan dan menyiapkan data  
-    - Menyediakan sistem penyimpanan data yang efisien berbasis cloud  
-    - Menampilkan visualisasi data suhu secara real-time dan historis  
-    - Menerapkan konsep Big Data dan IoT dalam sistem monitoring lingkungan
-    """)
+        st.subheader("🎯 Tujuan Proyek")
+        st.markdown("""
+        Tujuan dari proyek ini adalah menerapkan konsep **Big Data Pipeline** dalam pengolahan
+        data sensor suhu berbasis **Internet of Things (IoT)** secara menyeluruh, mulai dari
+        pengambilan data hingga penyajian informasi.
 
-    # =========================
-    # MANFAAT PROYEK
-    # =========================
-    st.subheader("📈 Manfaat Proyek")
-    st.markdown("""
-    Adapun manfaat dari implementasi sistem ini antara lain:
-    
-    - Memberikan gambaran nyata penerapan Big Data pada sistem IoT  
-    - Membantu memahami tahapan pengumpulan, pengolahan, dan visualisasi data sensor  
-    - Menyajikan informasi perubahan suhu secara digital dan interaktif  
-    - Menjadi acuan pengembangan sistem monitoring lingkungan berbasis data  
-    """)
-        
-    st.subheader("📋 Ruang Lingkup")
-    st.markdown("""
-- **Input:** Data sensor suhu dan kelembapan dari perangkat IoT (ESP32 + DHT22)
-- **Storage:** MongoDB cloud untuk penyimpanan data terstruktur
-- **Processing:** ETL pipeline dengan Python dan Pandas untuk pembersihan dan agregasi data
-- **Output:** Dashboard interaktif dengan visualisasi real-time dan analisis historis
+        Secara khusus, tujuan proyek ini meliputi:
+        - Merancang alur kerja Big Data Pipeline untuk data sensor suhu IoT
+        - Mengimplementasikan proses **ETL (Extract, Transform, Load)** untuk membersihkan dan menyiapkan data
+        - Menyediakan sistem penyimpanan data yang efisien dan terpusat
+        - Menampilkan visualisasi data suhu secara **real-time** dan **historis**
+        - Menerapkan konsep Big Data dan IoT dalam sistem monitoring lingkungan
         """)
-        
-    st.subheader("💡 Inovasi Proyek")
-    st.write("""
-Integrasi sempurna antara hardware IoT dengan cloud database dan dashboard analytics,
-memberikan monitoring real-time dan insights berbasis data historis secara bersamaan.
+
+        # =========================
+        # MANFAAT PROYEK
+        # =========================
+        st.subheader("📈 Manfaat Proyek")
+        st.markdown("""
+        - Memberikan gambaran nyata penerapan Big Data pada sistem IoT
+        - Membantu memahami proses pengolahan data sensor
+        - Menyajikan informasi suhu secara digital dan interaktif
+        - Menjadi acuan pengembangan sistem monitoring berbasis data
         """)
+
+        # =========================
+        # RUANG LINGKUP
+        # =========================
+        st.subheader("📋 Ruang Lingkup Proyek")
+        st.markdown("""
+        - **Input:** Sensor suhu & kelembapan (ESP32 + DHT22)
+        - **Processing:** ETL dengan Python / PySpark
+        - **Storage:** MongoDB Cloud
+        - **Output:** Dashboard Streamlit (Realtime & Historis)
+        """)
+
+
+        
+
+        
+
+
+   
+  
+
+  
+
+
 
     # --- TAB 3: BIG DATA PIPELINE ---
     with tab_pipe:
@@ -461,6 +456,7 @@ time-series dan dihasilkan secara kontinu.
         secara realtime, tetapi juga diubah menjadi informasi yang memiliki makna
         untuk pengambilan keputusan strategis.
         """)
+
 # 2. REALTIME MONITORING
 elif st.session_state.page == "realtime":
     st.markdown("<div class='hero'><h2>📡 Realtime Monitoring</h2></div>", unsafe_allow_html=True)
@@ -517,7 +513,7 @@ elif st.session_state.page == "analysis":
     rt_temp = realtime.get("temperature", 0)
     rt_hum = realtime.get("humidity", 0)
 
-    # Cari data pembanding dari database Clean (ETL)
+   
     clean = get_rule_based_clean(rt_temp, rt_hum)
 
     # Tampilan Layout
@@ -595,9 +591,9 @@ elif st.session_state.page == "viz":
 
 
 
-    # =========================
+  
     # LINE CHART AVG TEMP & HUM
-    # =========================
+  
     fig_line = go.Figure()
 
     fig_line.add_trace(go.Scatter(
@@ -627,9 +623,9 @@ elif st.session_state.page == "viz":
 
     st.plotly_chart(fig_line, use_container_width=True)
 
-    # =========================
+
     # SCATTER TEMP vs HUM
-    # =========================
+  
     fig_scatter = go.Figure()
 
     fig_scatter.add_trace(go.Scatter(
@@ -650,9 +646,9 @@ elif st.session_state.page == "viz":
 
     st.plotly_chart(fig_scatter, use_container_width=True)
 
-    # =========================
+  
     # HEATMAP KORELASI
-    # =========================
+   
     corr = df[["avg_temperature", "avg_humidity"]].corr()
 
     fig_corr = go.Figure(
