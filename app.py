@@ -49,51 +49,106 @@ else:
 # =====================================================
 st.markdown("""
 <style>
+
+/* ===== ROOT ===== */
+:root {
+    --bg-main: #0b0f14;
+    --bg-panel: #111827;
+    --bg-card: #161b22;
+    --border-soft: #1f2937;
+
+    --text-main: #e5e7eb;
+    --text-muted: #9ca3af;
+
+    --accent-blue: #60a5fa;
+    --accent-red: #f87171;
+    --accent-green: #4ade80;
+}
+
+/* ===== BODY ===== */
 body {
-    background: radial-gradient(circle at top, #0f172a, #020617);
-    color: #e5e7eb;
+    background: linear-gradient(180deg, #020617, #0b0f14);
+    color: var(--text-main);
 }
+
+/* ===== SIDEBAR ===== */
+section[data-testid="stSidebar"] {
+    background-color: #020617;
+    border-right: 1px solid var(--border-soft);
+}
+
 .sidebar-title {
-    font-size: 22px;
-    font-weight: 800;
-    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 18px;
+    color: var(--text-main);
 }
-.nav-card {
-    padding: 14px 18px;
-    border-radius: 14px;
-    margin-bottom: 12px;
-    background: linear-gradient(145deg, #111827, #020617);
-    border: 1px solid #1f2937;
-    cursor: pointer;
+
+/* ===== BUTTON ===== */
+button[kind="secondary"] {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-soft);
+    color: var(--text-main);
+    border-radius: 12px;
+    padding: 10px 14px;
     transition: all .25s ease;
 }
-.nav-card:hover {
-    background: linear-gradient(145deg, #1f2937, #020617);
-    transform: translateX(4px);
+
+button[kind="secondary"]:hover {
+    background: #1f2937;
+    transform: translateX(3px);
 }
-.nav-active {
-    background: linear-gradient(135deg, #2563eb, #1e40af);
-    border: none;
-}
+
+/* ===== HERO ===== */
 .hero {
-    padding: 40px;
-    border-radius: 24px;
-    background: linear-gradient(135deg, #0f172a, #020617);
-    box-shadow: 0 30px 60px rgba(0,0,0,.6);
-    margin-bottom: 30px;
+    padding: 34px;
+    border-radius: 18px;
+    background: linear-gradient(145deg, #020617, #111827);
+    border: 1px solid var(--border-soft);
+    margin-bottom: 28px;
 }
+
+/* ===== CARD ===== */
 .card {
-    padding: 26px;
-    border-radius: 20px;
-    background: linear-gradient(145deg, #111827, #020617);
-    box-shadow: 0 20px 40px rgba(0,0,0,.6);
-    margin-bottom: 20px;
+    padding: 22px;
+    border-radius: 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    margin-bottom: 18px;
 }
-.green { color: #22c55e; font-weight: 800; }
-.yellow { color: #facc15; font-weight: 800; }
-.red { color: #ef4444; font-weight: 800; }
+
+/* ===== METRIC ===== */
+div[data-testid="metric-container"] {
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    padding: 18px;
+    border-radius: 14px;
+}
+
+div[data-testid="metric-container"] label {
+    color: var(--text-muted);
+}
+
+/* ===== TABLE ===== */
+div[data-testid="stDataFrame"] {
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: 12px;
+}
+
+/* ===== TEXT COLOR ===== */
+.green { color: var(--accent-green); font-weight: 700; }
+.red { color: var(--accent-red); font-weight: 700; }
+.blue { color: var(--accent-blue); font-weight: 700; }
+
+/* ===== PLOTLY ===== */
+.plotly-graph-div {
+    background: transparent !important;
+}
+
 </style>
 """, unsafe_allow_html=True)
+
 
 # =====================================================
 # SESSION STATE (NAVIGATION)
